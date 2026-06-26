@@ -1,0 +1,85 @@
+/* ---- base ---------------------------------------------------------------- */
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; background:#E7E0D4; -webkit-text-size-adjust:100%; }
+body{ font-family:'Manrope',-apple-system,sans-serif; }
+
+/* ---- toolbar ------------------------------------------------------------- */
+#lp-toolbar{
+  position:fixed; top:0; left:0; right:0; height:46px; z-index:1000;
+  display:flex; align-items:center; gap:6px; padding:0 12px;
+  background:#FAF6EE; border-bottom:1px solid #D8CFC0;
+  font-family:'Manrope',sans-serif; font-size:12px; color:#5A4F45;
+  overflow-x:auto; white-space:nowrap;
+}
+#lp-toolbar .tb-brand{ font-family:'Cormorant Garamond',serif; font-style:italic; font-size:18px; color:#2B2622; margin-right:4px; }
+#lp-toolbar button{
+  font:inherit; font-size:12px; color:#5A4F45; background:#fff; border:1px solid #D8CFC0;
+  border-radius:6px; padding:5px 10px; cursor:pointer; line-height:1; flex:none;
+}
+#lp-toolbar button:hover{ background:#EFE6D2; }
+#lp-toolbar .tb-sep{ width:1px; height:22px; background:#E8DFD0; flex:none; margin:0 2px; }
+#lp-toolbar .tb-label{ font-weight:600; color:#2B2622; min-width:120px; text-align:center; flex:none; }
+#lp-toolbar .tb-nav{ padding:5px 9px; font-size:14px; }
+#lp-toolbar .tb-spacer{ flex:1 1 auto; }
+#lp-toolbar .tb-dots{ display:flex; gap:5px; align-items:center; flex:none; }
+#lp-toolbar .tb-dot{ width:16px; height:16px; border-radius:50%; cursor:pointer; border:1.5px solid rgba(0,0,0,.15); padding:0; }
+#lp-toolbar .tb-dot.on{ outline:2px solid #2B2622; outline-offset:1px; }
+
+/* ---- fit / stage --------------------------------------------------------- */
+#lp-fit{ position:absolute; top:46px; left:0; right:0; bottom:0; overflow:auto; }
+#lp-stage-wrap{ position:absolute; }
+#lp-stage{ position:relative; width:1080px; height:810px; transform-origin:top left; }
+
+/* ---- page router --------------------------------------------------------- */
+.lp-page{ display:none; position:absolute; top:0; left:0; }
+.lp-page.is-active{ display:block; }
+
+/* ---- interactive fields -------------------------------------------------- */
+.lp-field{ font:inherit; font-size:inherit; color:#5A4F45; background:transparent;
+  border:none; outline:none; width:100%; min-width:0; padding:0 2px; margin:0; }
+.lp-field:focus{ background:rgba(138,123,98,.10); border-radius:2px; }
+.lp-area{ font:inherit; color:#5A4F45; background:transparent; border:none; outline:none;
+  resize:none; width:100%; height:100%; padding:2px; margin:0; }
+.lp-area:focus{ background:rgba(138,123,98,.06); }
+
+/* line-style field (writeLines, fill lines) */
+.lp-line{ border-bottom:1px solid #D8CFC0; }
+.lp-line:focus{ background:rgba(138,123,98,.10); border-bottom-color:var(--c-deep); }
+
+/* numeric field — slightly tighter, right context decides alignment */
+.lp-num{ font-variant-numeric:tabular-nums; }
+
+/* ---- water-drop toggle --------------------------------------------------- */
+.lp-drop{ position:relative; }
+.lp-drop-svg{ stroke:var(--c-deep); fill:transparent; transition:fill .12s; }
+.lp-toggle:checked + .lp-drop-svg{ fill:var(--c-tint); }
+
+/* ---- square grid toggle (habit cells) ------------------------------------ */
+.lp-sqwrap{ position:relative; }
+.lp-sq{ display:inline-block; flex:none; border:1px solid var(--c-mid); border-radius:3px;
+  background:transparent; box-sizing:border-box; transition:background .12s,border-color .12s; }
+.lp-toggle:checked + .lp-sq{ background:var(--c-mid); border-color:var(--c-deep); }
+
+/* ---- derived (computed) value markers ------------------------------------ */
+.js-calc{ }
+
+/* ---- checkbox toggle ----------------------------------------------------- */
+.lp-cbwrap{ position:relative; }
+.lp-tg{ display:inline-flex; align-items:center; justify-content:center; flex:none;
+  border:1.3px solid #D8CFC0; border-radius:3px; background:transparent;
+  transition:background .12s,border-color .12s; box-sizing:border-box; }
+.lp-toggle:checked + .lp-tg{ background:var(--c-tint); border-color:var(--c-deep); }
+.lp-tg-chk{ stroke:var(--c-deep); opacity:0; transition:opacity .1s; }
+.lp-toggle:checked + .lp-tg .lp-tg-chk{ opacity:1; }
+
+/* ---- print --------------------------------------------------------------- */
+@page{ size:1080px 810px; margin:0; }
+@media print{
+  html,body{ background:#fff; }
+  #lp-toolbar{ display:none !important; }
+  #lp-fit{ position:static; overflow:visible; top:0; }
+  #lp-stage-wrap{ position:static; }
+  #lp-stage{ transform:none !important; width:1080px; height:auto; }
+  .lp-page{ display:block !important; position:relative !important; page-break-after:always; }
+  .lp-field:focus,.lp-area:focus,.lp-line:focus{ background:transparent; }
+}
